@@ -1,0 +1,29 @@
+<!DOCTYPE  html >
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    
+    <title>Login</title>
+    
+
+    
+</head>
+<body>
+    
+    <div class="login-page">
+        <div class="form">
+            <div th:if="${error}" class="error-message">
+                <p th:text="${error}"></p>
+            </div>
+            <form class="formulario" th:action="@{/logincheck}" method="post">
+                <input type="email" name="email" placeholder="EMAIL" >
+                <input type="password" name="password" placeholder="CONTRASEÑA" >
+            <button>login</button>
+            <p class="message">Not registered? <a th:href="@{/registrar}">Create an account</a></p>
+          </form>
+        </div>
+      </div>
+</body>
+</html>

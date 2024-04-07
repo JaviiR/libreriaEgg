@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <!-- Bootstrap core CSS -->
+    <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link th:href="@{/assets/css/jumbotron.css}" rel="stylesheet">
+    <link th:href="@{/assets/css/sticky-footer-navbar.css}" rel="stylesheet">
+    <link th:href="@{https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css}" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Libro</title>
+
+</head>
+
+<body>
+    <!-- Modal -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h2>Paginación Simple</h2>
+        <ul id="pagination" class="pagination justify-content-center"></ul>
+        <div id="content" class="list-group mt-3"></div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+    <div class="login-page">
+
+        <div class="form">
+            <div th:if="${error}" class="error-message">
+                <p th:text="${error}"></p>
+            </div>
+            <form class="formulario" th:action="@{/add/libro}" method="post" enctype="multipart/form-data">
+                <h2 id="tittle-new-autor">NUEVO LIBRO</h2>
+                <input type="text" name="isbn" placeholder="ISBN" th:value="${isbn}">
+                <input type="text" name="titulo" placeholder="TITULO" th:value="${titulo}">
+                <input type="number" name="ejemplar" placeholder="EJEMPLARES" th:value="${ejemplar}">
+                <input type="date" name="alta" placeholder="ALTA" th:value="${#dates.format(alta, 'yyyy-MM-dd')}">
+                <input type="hidden" name="autorId" th:value="${autorId}" id="autorId">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                  Elegir autor
+                </button>
+                <input class="inputNombre" name="autor" type="search" id="nombreAutorInput" onkeyup="buscarNombresAutor()" placeholder="AUTOR" th:value="${autor}">
+                <div class="listaNombres" id="listaNombresAutor" hidden></div>
+                <input type="hidden" name="editorialId" th:value="${editorialId}" id="editorialId">
+                <input class="inputNombre" type="search" name="editorial" id="nombreEditorialInput" onkeyup="buscarNombresEditorial()" placeholder="EDITORIAL" th:value="${editorial}">
+                <div class="listaNombres" id="listaNombresEditorial" hidden></div>
+                <div class="form-group">
+                    <label for="archivoImagen" style="text-decoration: underline; font-size:20px">Imagen Libro</label>
+                    <input type="file" class="form-control-file" name="archivoImagen">
+                </div>
+                <button type="submit">Crear</button>
+            </form>
+        </div>
+    </div>
+
+
+
+
+    <!--<script src="/js/buscarNombres.js"></script>-->
+    <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js}"></script>
+    <script th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.js}"></script>
+    <script th:src="@{/assets/js/bootstrap.min.js}"></script>
+    <script src="/assets/js/buscarNombres.js"></script>
+    <script src="/assets/js/ListarLibros.js"></script>
+    <script th:src="@{/assets/tinymce/tinymce.min.js}"></script>
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    
+</body>
+
+</html>

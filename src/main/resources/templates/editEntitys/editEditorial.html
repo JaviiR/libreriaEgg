@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <!-- Bootstrap core CSS -->
+  <link th:href="@{/assets/css/bootstrap.min.css}" rel="stylesheet">
+  <!-- Custom styles for this template -->
+  <link th:href="@{/assets/css/jumbotron.css}" rel="stylesheet">
+  <link th:href="@{/assets/css/sticky-footer-navbar.css}" rel="stylesheet">
+  <link th:href="@{https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css}" rel="stylesheet">
+    <title>Editorial</title>
+    
+</head>
+<body>
+    <div class="login-page">
+        
+        <div class="form" >
+          <div th:if="${error}" class="error-message">
+            <p th:text="${error}"></p>
+        </div>
+          <form class="formulario" th:action="@{/editar/editorial}" method="post" enctype="multipart/form-data">
+            <h2 id="tittle-new-autor">ACTUALIZAR EDITORIAL</h2>
+            <input type="text" name="editorialId" th:value="${editorialId}" hidden="true">
+            <input type="text" name="nombre" placeholder="NOMBRE" th:value="${nombre}">
+            <div class="form-group">
+              <label for="archivoImagen" style="text-decoration: underline; font-size:20px">Logo Editorial</label>
+              <input type="file" class="form-control-file" name="archivoImagen">
+            </div>
+            <button type="submit" >ACTUALIZAR</button>
+          </form>
+          
+          
+          
+          
+          
+          
+          
+        </div>
+      </div>
+      <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js}"></script>
+      <script th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.js}"></script>
+      <script th:src="@{/assets/js/bootstrap.min.js}"></script>
+      <script th:src="@{/assets/js/myScript.js}"></script>
+      <script th:src="@{/assets/tinymce/tinymce.min.js}"></script>
+</body>
+
+</html>

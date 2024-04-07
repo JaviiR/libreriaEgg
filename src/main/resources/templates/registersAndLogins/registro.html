@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <title>Registro</title>
+    
+</head>
+<body>
+    <div class="login-page">
+        
+        <div class="form" >
+            <div th:if="${error}" class="error-message">
+                <p th:text="${error}"></p>
+            </div>
+          <form class="formulario" th:action="@{/registrar}" method="post">
+            <input type="text" name="nombre" placeholder="NOMBRE" th:value="${nombre}">
+            <input type="email" name="email" placeholder="EMAIL" th:value="${email}">
+            <input type="password" name="password" placeholder="CONTRASEÑA" th:value="${password}">
+            <input type="password" name="password2" placeholder="REPETIR CONTRASEÑA" th:value="${password2}">
+            <button type="submit" >Registrarme</button>
+            <p class="message">Already registered? <a th:href="@{/login}">Sign In</a></p>
+          </form>
+          
+          
+          
+          
+          
+          
+          
+        </div>
+      </div>
+
+</body>
+
+</html>

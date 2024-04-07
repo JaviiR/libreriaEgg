@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <title>Editorial</title>
+
+</head>
+
+<body>
+    <div class="login-page">
+
+        <div class="form">
+
+            <form class="formulario" th:action="@{/editar/libro}" method="post" enctype="multipart/form-data">
+                <h2 id="tittle-new-autor">EDITAR LIBRO</h2>
+                <div th:if="${error}" class="error-message">
+                    <p th:text="${error}"></p>
+                </div>
+                    <input type="text" name="isbn" th:value="${isbn}" hidden>
+                    <input type="text" name="titulo" placeholder="TITULO" th:value="${titulo}">
+                    <input type="number" name="ejemplar" placeholder="EJEMPLARES" th:value="${ejemplar}">
+                    <input type="date" name="alta" placeholder="ALTA" th:value="${#dates.format(alta, 'yyyy-MM-dd')}">
+                    <input type="hidden" name="autorId" th:value="${autorId}" id="autorId">
+                    <input class="inputNombre" name="autor" type="search" id="nombreAutorInput"
+                        onkeyup="buscarNombresAutor()" placeholder="AUTOR" th:value="${autor}">
+                    <div class="listaNombres" id="listaNombresAutor" hidden></div>
+                    <input type="hidden" name="editorialId" th:value="${editorialId}" id="editorialId">
+                    <input class="inputNombre" type="search" name="editorial" id="nombreEditorialInput"
+                        onkeyup="buscarNombresEditorial()" placeholder="EDITORIAL" th:value="${editorial}">
+                    <div class="listaNombres" id="listaNombresEditorial" hidden></div>
+                    <div class="form-group">
+                        <label for="archivoImagen" style="text-decoration: underline; font-size:20px">Imagen Libro</label>
+                        <input type="file" class="form-control-file" name="archivoImagen">
+                    </div>
+                <button type="submit">ACTUALIZAR</button>
+
+
+            </form>
+        </div>
+    </div>
+
+
+
+
+    <script src="/assets/js/buscarNombres.js"></script>
+    <script th:src="@{/assets/tinymce/tinymce.min.js}"></script>
+</body>
+
+</html>
