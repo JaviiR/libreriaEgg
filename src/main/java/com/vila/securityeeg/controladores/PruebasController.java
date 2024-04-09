@@ -10,7 +10,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.vila.securityeeg.entitys.Autor;
+import com.vila.securityeeg.entitys.Editorial;
 import com.vila.securityeeg.entitys.Libro;
+import com.vila.securityeeg.servicios.AutorServicio;
+import com.vila.securityeeg.servicios.EditorialServicio;
 import com.vila.securityeeg.servicios.LibroServicio;
 
 
@@ -19,24 +23,42 @@ import com.vila.securityeeg.servicios.LibroServicio;
 public class PruebasController {
     @Autowired
     private  LibroServicio libroServicio;
+    @Autowired
+    private  AutorServicio autorServicio;
+    @Autowired
+    private  EditorialServicio editorialServicio;
 
     @GetMapping
     public String getMethodName() {
         return "modalExample";
     }
 
-    @GetMapping("/total")
-    public ResponseEntity<Integer> totalPaginas() {
-        int i=libroServicio.totalPaginasde5en5();
+    @GetMapping("/totalPaginasAutores")
+    public ResponseEntity<Integer> totalPaginasAutores() {
+        int i=autorServicio.totalPaginasde5en5();
         return new ResponseEntity<>(i,HttpStatus.OK);
     }
 
-    @GetMapping("/libros")
-    public ResponseEntity<List<Libro>> datosLibros5en5(@RequestParam String fila) {
-        int i=Integer.parseInt(fila);
-        List<Libro> listLibros=libroServicio.listar5en5(i);
-        return new ResponseEntity<>(listLibros,HttpStatus.OK);
+    @GetMapping("/totalPaginasEditoriales")
+    public ResponseEntity<Integer> totalPaginasEditoriales() {
+        int i=editorialServicio.totalPaginasde5en5();
+        return new ResponseEntity<>(i,HttpStatus.OK);
     }
+
+    @GetMapping("/autor")
+    public ResponseEntity<List<Autor>> datosAutores5en5(@RequestParam String fila) {
+        int i=Integer.parseInt(fila);
+        List<Autor> listAutores=autorServicio.listar5en5(i);
+        return new ResponseEntity<>(listAutores,HttpStatus.OK);
+    }
+
+    @GetMapping("/editorial")
+    public ResponseEntity<List<Editorial>> datosEditoriales5en5(@RequestParam String fila) {
+        int i=Integer.parseInt(fila);
+        List<Editorial> listEditoriales=editorialServicio.listar5en5(i);
+        return new ResponseEntity<>(listEditoriales,HttpStatus.OK);
+    }
+    
     
     
     

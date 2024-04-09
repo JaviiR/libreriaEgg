@@ -2,8 +2,11 @@
 var currentPage = 1;
 var itemsPerPage = 5;
 var totalItems = 100;
-var totalPaginaciones = 0;
 
+const btnAutor=document.getElementById("btnAddAutor");
+
+btnAutor.addEventListener("click", function(){
+    let totalPaginaciones=0;
 
 async function obtenerListaDeObjetos(page) {
     return new Promise(resolve => {
@@ -11,7 +14,7 @@ async function obtenerListaDeObjetos(page) {
         // Supongamos que aquí llamamos a una función asíncrona o hacemos una solicitud HTTP
         // Ejemplo ficticio:
         setTimeout(() => {
-            fetch(`/pruebas/libros?fila=` + page)
+            fetch(`/pruebas/autor?fila=` + page)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Hubo un problema al llamar al endpoint.');
@@ -26,33 +29,35 @@ async function obtenerListaDeObjetos(page) {
     });
 }
 
+fetch(`/pruebas/totalPaginasAutores`)
+.then(response => response.json())
+.then(data => {
+    totalPaginaciones=data;
+    
+})
+.catch(error => console.error('Error:', error));
 
-fetch(`/pruebas/total`)
-    .then(response => response.json())
-    .then(data => {
-        totalPaginaciones = data;
-    })
-    .catch(error => console.error('Error:', error))
 
 
 
 // Función para generar los ítems de la página actual
 async function generateItems(page) {
     var listaDeObjetos2 = await obtenerListaDeObjetos(page);
-    const listaLibros = document.getElementById('content');
-    listaLibros.innerHTML = "";
+    const listaAutores = document.getElementById('content');
+    listaAutores.innerHTML = "";
     listaDeObjetos2
         .forEach(objeto => {
-            var nuevoDiv = document.createElement("h1");
+            var nuevoDiv=document.createElement("div");
+            nuevoDiv.class="tab-item"
             nuevoDiv.id = "content-libro";
-            nuevoDiv.innerHTML = "Libro: " + objeto.titulo;
-            listaLibros.appendChild(nuevoDiv);
-            var nuevoId=document.createElement("h1");
-            nuevoId.hidden=true;
-            listaLibros.appendChild(nuevoId);
+            nuevoDiv.innerHTML=`<img src="/imagenes/autor/${objeto.img}" alt="" style="width:120px;">
+            <h4>${objeto.nombre}</h4>
+        `;
+            listaAutores.appendChild(nuevoDiv);
             nuevoDiv.addEventListener("click",function(){
-                console.log(objeto.isbn);
-                nuevoId.innerHTML=objeto.isbn;
+                console.log(objeto.id);
+                document.getElementById("autorId").value=objeto.id;
+                document.getElementById("autorId").innerHTML=objeto.id;
                 
             });
         });
@@ -68,7 +73,10 @@ function generatePagination(page) {
         pagination.push('<li class="page-item ' + (i === page ? 'active' : '') + '"><a class="page-link" href="#" data-page="' + i + '">' + i + '</a></li>');
     }
     pagination.push('<li class="page-item ' + (page === totalPages ? 'disabled' : '') + '"><a class="page-link" href="#" data-page="' + (page + 1) + '">Siguiente</a></li>');
-    return pagination.join('');
+
+        
+            return pagination.join('');
+
 }
 
 // Función para manejar el evento de clic en los botones de paginación
@@ -83,7 +91,7 @@ function handlePaginationClick(e) {
 
 
 // Función para renderizar la paginación y los ítems de la página actual
-function render() {
+async function render() {
     document.getElementById('content').innerHTML = generateItems(currentPage);
     document.getElementById('pagination').innerHTML = generatePagination(currentPage);
 }
@@ -99,3 +107,4 @@ render();
 //generateItems(2);
 //captura el evento clik del div hijo
 
+});

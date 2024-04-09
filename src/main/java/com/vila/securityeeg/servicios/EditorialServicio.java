@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.vila.securityeeg.entitys.Autor;
 import com.vila.securityeeg.entitys.Editorial;
 import com.vila.securityeeg.repositorios.EditorialRepository;
 
@@ -77,5 +79,18 @@ public class EditorialServicio {
 
     public List<Editorial> buscarEditorialesPorNombre(String nombreEditorial) throws Exception{
         return editorialRepository.findAllByNombre(nombreEditorial);
+    }
+
+
+    public int totalPaginasde5en5(){
+        return editorialRepository.totalPaginas(5.0);
+    }
+
+    public List<Editorial> listar5en5(int fila){
+        int datosPasados=0;
+        if(fila>1){
+            datosPasados=(fila-1)*5;
+        }
+        return editorialRepository.EditorialesDe5en5(datosPasados);
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.vila.securityeeg.entitys.Autor;
+import com.vila.securityeeg.entitys.Libro;
 import com.vila.securityeeg.repositorios.AutorRepository;
 
 @Service
@@ -78,5 +79,15 @@ public class AutorServicio {
     public List<Autor> buscarAutoresPorNombre(String nombreAutor) throws Exception{
         return autorRepository.findAllByNombre(nombreAutor);
     }
-    
+    public int totalPaginasde5en5(){
+        return autorRepository.totalPaginas(5.0);
+    }
+
+    public List<Autor> listar5en5(int fila){
+        int datosPasados=0;
+        if(fila>1){
+            datosPasados=(fila-1)*5;
+        }
+        return autorRepository.AutoresDe5en5(datosPasados);
+    }
 }

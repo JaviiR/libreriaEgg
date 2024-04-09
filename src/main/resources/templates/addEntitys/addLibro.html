@@ -52,14 +52,13 @@
                 <input type="number" name="ejemplar" placeholder="EJEMPLARES" th:value="${ejemplar}">
                 <input type="date" name="alta" placeholder="ALTA" th:value="${#dates.format(alta, 'yyyy-MM-dd')}">
                 <input type="hidden" name="autorId" th:value="${autorId}" id="autorId">
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="btnAddAutor">
                   Elegir autor
                 </button>
-                <input class="inputNombre" name="autor" type="search" id="nombreAutorInput" onkeyup="buscarNombresAutor()" placeholder="AUTOR" th:value="${autor}">
-                <div class="listaNombres" id="listaNombresAutor" hidden></div>
-                <input type="hidden" name="editorialId" th:value="${editorialId}" id="editorialId">
-                <input class="inputNombre" type="search" name="editorial" id="nombreEditorialInput" onkeyup="buscarNombresEditorial()" placeholder="EDITORIAL" th:value="${editorial}">
-                <div class="listaNombres" id="listaNombresEditorial" hidden></div>
+                <input type="hidden" name="editorialId" th:value="${editorialId}" id="editorialId" >
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal" id="btnAddEditorial">
+                  Elegir Editorial
+                </button>
                 <div class="form-group">
                     <label for="archivoImagen" style="text-decoration: underline; font-size:20px">Imagen Libro</label>
                     <input type="file" class="form-control-file" name="archivoImagen">
@@ -76,8 +75,8 @@
     <script th:src="@{https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js}"></script>
     <script th:src="@{https://code.jquery.com/ui/1.12.1/jquery-ui.js}"></script>
     <script th:src="@{/assets/js/bootstrap.min.js}"></script>
-    <script src="/assets/js/buscarNombres.js"></script>
-    <script src="/assets/js/ListarLibros.js"></script>
+    <script src="/assets/js/ObtenerAutor.js"></script>
+    <script src="/assets/js/ObtenerEditorial.js"></script>
     <script th:src="@{/assets/tinymce/tinymce.min.js}"></script>
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>

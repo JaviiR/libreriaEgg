@@ -34,10 +34,8 @@ public class SeguridadWeb {
     @Bean
     SecurityFilterChain configure(HttpSecurity http) throws Exception{
         return http.authorizeHttpRequests(auth->auth
-        .requestMatchers("/admin/**","/add/**").hasRole("ADMIN")
-        .requestMatchers("/listar/**","/principal/**").authenticated()
-        .anyRequest().permitAll()
-        )
+        .requestMatchers("/listar/**","/principal/**","/admin/**","/add/**","/editar/**","/eliminar/**").authenticated()
+        .anyRequest().permitAll())
         .formLogin(form->form.loginPage("/login").loginProcessingUrl("/logincheck")
         .usernameParameter("email").passwordParameter("password")
         .defaultSuccessUrl("/principal")
@@ -45,7 +43,6 @@ public class SeguridadWeb {
         .logout(logout->logout.logoutUrl("/logout")
         .logoutSuccessUrl("/").permitAll()
         )
-        .exceptionHandling(e->e.accessDeniedPage("/acces-denied"))
         .build();
     }
     
