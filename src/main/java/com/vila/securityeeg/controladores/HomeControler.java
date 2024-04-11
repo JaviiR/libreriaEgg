@@ -1,24 +1,17 @@
 package com.vila.securityeeg.controladores;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-
 import com.vila.securityeeg.entitys.Usuario;
-import com.vila.securityeeg.servicios.LibroServicio;
-
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/")
 public class HomeControler {
-
-    @Autowired
-    private LibroServicio libroServicio;
 
     @GetMapping()
     public String inicio() {
@@ -33,10 +26,12 @@ public class HomeControler {
             return "redirect:/login";
         } else if (logueado.getRol().toString().equals("ADMIN")) {
             modelo.addAttribute("nombreUsuario", logueado.getNombre());
+            modelo.addAttribute("idUsuario", logueado.getId());
             return "redirect:/admin/dashboard";
 
         } else {
             modelo.addAttribute("nombreUsuario", logueado.getNombre());
+            modelo.addAttribute("idUsuario", logueado.getId());
             return "/paneles/principal";
         }
 

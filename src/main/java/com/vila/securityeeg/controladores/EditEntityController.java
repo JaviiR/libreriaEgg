@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-
 import com.vila.securityeeg.entitys.Autor;
 import com.vila.securityeeg.entitys.Editorial;
 import com.vila.securityeeg.entitys.Libro;
@@ -19,16 +18,13 @@ import com.vila.securityeeg.servicios.AutorServicio;
 import com.vila.securityeeg.servicios.EditorialServicio;
 import com.vila.securityeeg.servicios.LibroServicio;
 import com.vila.securityeeg.utileria.Utileria;
-
 import jakarta.servlet.http.HttpSession;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import java.util.Date;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.text.SimpleDateFormat;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Controller
 @RequestMapping("/editar")

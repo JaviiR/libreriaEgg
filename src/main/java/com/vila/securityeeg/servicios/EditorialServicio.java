@@ -1,12 +1,9 @@
 package com.vila.securityeeg.servicios;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-import com.vila.securityeeg.entitys.Autor;
 import com.vila.securityeeg.entitys.Editorial;
 import com.vila.securityeeg.repositorios.EditorialRepository;
 

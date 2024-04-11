@@ -1,25 +1,15 @@
 package com.vila.securityeeg.controladores;
 
-import java.util.ArrayList;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import com.vila.securityeeg.entitys.Libro;
 import com.vila.securityeeg.entitys.Usuario;
 import com.vila.securityeeg.repositorios.AutorRepository;
 import com.vila.securityeeg.repositorios.EditorialRepository;
 import com.vila.securityeeg.repositorios.LibroRepository;
-
 import jakarta.servlet.http.HttpSession;
-
-import org.springframework.web.bind.annotation.RequestParam;
-
-
 
 @Controller
 @RequestMapping("/listar")
@@ -40,10 +30,12 @@ public class ListEntityController {
         }
         else if (logueado.getRol().toString().equals("ADMIN")) {
             modelo.addAttribute("nombreUsuario", logueado.getNombre());
+            modelo.addAttribute("idUsuario", logueado.getId());
             return "redirect:/listar/autorAdmin";
         }else{
 
         modelo.addAttribute("nombreUsuario", logueado.getNombre());
+        modelo.addAttribute("idUsuario", logueado.getId());
         modelo.addAttribute("autor",autorRepo.findAll());
         return "/listEntitys/listAutorUser";
         }
@@ -57,10 +49,12 @@ public class ListEntityController {
         }
         else if (logueado.getRol().toString().equals("ADMIN")) {
             modelo.addAttribute("nombreUsuario", logueado.getNombre());
+            modelo.addAttribute("idUsuario", logueado.getId());
             return "redirect:/listar/libroAdmin";
 
         }else{
         modelo.addAttribute("nombreUsuario", logueado.getNombre());
+        modelo.addAttribute("idUsuario", logueado.getId());
         modelo.addAttribute("libro",libroRepo.findAll());
         return "/listEntitys/listLibroUser";
         }
@@ -74,10 +68,12 @@ public class ListEntityController {
         }
         else if (logueado.getRol().toString().equals("ADMIN")) {
             modelo.addAttribute("nombreUsuario", logueado.getNombre());
+            modelo.addAttribute("idUsuario", logueado.getId());
             return "redirect:/listar/editorialAdmin";
 
         }else{
         modelo.addAttribute("nombreUsuario", logueado.getNombre());
+        modelo.addAttribute("idUsuario", logueado.getId());
         modelo.addAttribute("editorial",editorialRepo.findAll());
         return "/listEntitys/listEditorialUser";
         }
@@ -93,10 +89,12 @@ public class ListEntityController {
         }
         else if (logueado.getRol().toString().equals("USER")) {
             modelo.addAttribute("nombreUsuario", logueado.getNombre());
+            modelo.addAttribute("idUsuario", logueado.getId());
             return "redirect:/listar/autor";
 
         }else{
         modelo.addAttribute("nombreUsuario", logueado.getNombre());
+        modelo.addAttribute("idUsuario", logueado.getId());
         modelo.addAttribute("autor",autorRepo.findAll());
         return "/listEntitys/listAutorAdmin";
         }
@@ -110,10 +108,12 @@ public class ListEntityController {
         }
         else if (logueado.getRol().toString().equals("USER")) {
             modelo.addAttribute("nombreUsuario", logueado.getNombre());
+            modelo.addAttribute("idUsuario", logueado.getId());
             return "redirect:/listar/libro";
 
         }else{
         modelo.addAttribute("nombreUsuario", logueado.getNombre());
+        modelo.addAttribute("idUsuario", logueado.getId());
         modelo.addAttribute("libro",libroRepo.findAll());
         return "/listEntitys/listLibroAdmin";
         }
@@ -127,10 +127,12 @@ public class ListEntityController {
         }
         else if (logueado.getRol().toString().equals("USER")) {
             modelo.addAttribute("nombreUsuario", logueado.getNombre());
+            modelo.addAttribute("idUsuario", logueado.getId());
             return "redirect:/listar/editorial";
 
         }else{
         modelo.addAttribute("nombreUsuario", logueado.getNombre());
+        modelo.addAttribute("idUsuario", logueado.getId());
         modelo.addAttribute("editorial",editorialRepo.findAll());
         return "/listEntitys/listEditorialAdmin";
         }

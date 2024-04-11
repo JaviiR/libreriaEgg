@@ -11,13 +11,13 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-
+import org.springframework.web.multipart.MultipartFile;
+import java.util.Optional;
 import java.util.List;
 import java.util.ArrayList;
 import com.vila.securityeeg.entitys.Usuario;
 import com.vila.securityeeg.enumeraciones.Rol;
 import com.vila.securityeeg.repositorios.UsuarioRepositorio;
-
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 
@@ -26,17 +26,42 @@ public class UsuarioServicios implements UserDetailsService{
     
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
+    @Autowired
+    private ImagenServicio imagenServicio;
 
     @Transactional
-    public void registrar(String nombre,String email,String password,String password2) throws Exception{
+    public void registrar(MultipartFile archivo,String nombre,String email,String password,String password2) throws Exception{
         validar(nombre,email,password,password2);
         Usuario usuario=new Usuario();
         usuario.setNombre(nombre);
         usuario.setEmail(email);
         usuario.setPassword(new BCryptPasswordEncoder().encode(password));
         usuario.setRol(Rol.USER);
+        usuario.setImagen(imagenServicio.guardarImagen(archivo));
         usuarioRepositorio.save(usuario);
     }
+
+
+    @Transactional
+    public void actualizar(MultipartFile archivo,String idUsuario,String nombre,String email,String password,String password2) throws Exception{
+        validar(nombre,email,password,password2);
+        Optional<Usuario> respuesta=usuarioRepositorio.findById(idUsuario);
+        if(respuesta.isPresent()){
+            Usuario usuario=respuesta.get();
+            usuario.setNombre(nombre);
+            usuario.setEmail(email);
+            usuario.setPassword(new BCryptPasswordEncoder().encode(password));
+            usuario.setRol(Rol.USER);
+            String IdImagen=null;
+            if(usuario.getImagen()!=null){
+                IdImagen=usuario.getImagen().getId();
+            }
+            usuario.setImagen(imagenServicio.actualizar(archivo,IdImagen));
+            usuarioRepositorio.save(usuario);
+        }
+        
+    }
+
 
     private void validar(String nombre,String email,String password,String password2)throws Exception{
         if(nombre.isEmpty() || nombre==null){
@@ -67,5 +92,10 @@ public class UsuarioServicios implements UserDetailsService{
         }else{
             return null;
         }
+    }
+
+    public Usuario usuarioById(String id){
+        Usuario usuario=usuarioRepositorio.findById(id).get();
+        return usuario;
     }
 }

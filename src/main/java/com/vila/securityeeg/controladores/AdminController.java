@@ -3,11 +3,8 @@ package com.vila.securityeeg.controladores;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
-
 import com.vila.securityeeg.entitys.Usuario;
-
 import jakarta.servlet.http.HttpSession;
-
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -24,10 +21,12 @@ public class AdminController {
         }
         else if (!logueado.getRol().toString().equals("ADMIN")) {
             modelo.addAttribute("nombreUsuario", logueado.getNombre());
+            modelo.addAttribute("idUsuario", logueado.getId());
             return "redirect:/principal";
 
         }else{
             modelo.addAttribute("nombreUsuario", logueado.getNombre());
+            modelo.addAttribute("idUsuario", logueado.getId());
             return "/paneles/panelAdmin";
         }
         

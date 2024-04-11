@@ -1,7 +1,6 @@
 package com.vila.securityeeg.servicios;
 
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import com.vila.securityeeg.entitys.Autor;
@@ -9,7 +8,6 @@ import com.vila.securityeeg.entitys.Editorial;
 import com.vila.securityeeg.entitys.Libro;
 import com.vila.securityeeg.repositorios.LibroRepository;
 import jakarta.transaction.Transactional;
-
 import java.util.Date;
 
 @Service
@@ -52,7 +50,7 @@ public class LibroServicio {
                 libroRepository.save(libro);    
             }
         }
-         catch (Exception e) {
+        catch (Exception e) {
             throw new Exception(e.getMessage());
         }
         
