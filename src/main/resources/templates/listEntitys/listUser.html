@@ -11,7 +11,7 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap"
         rel="stylesheet">
-
+    <link rel="stylesheet" href="/assets/css/style.css">
     <title>Klassy Cafe - Restaurant HTML Template</title>
     <!--
     
@@ -30,6 +30,7 @@ https://templatemo.com/tm-558-klassy-cafe
     <link rel="stylesheet" href="/assets/css/owl-carousel.css">
 
     <link rel="stylesheet" href="/assets/css/lightbox.css">
+
 
 </head>
 
@@ -64,7 +65,8 @@ https://templatemo.com/tm-558-klassy-cafe
                             <li class="submenu">
                                 <a href="javascript:;">Libros</a>
                                 <ul>
-                                    <li><a class="dropdown-item" th:href="@{/listar/libroAdmin}">Listar Libros</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/listar/libroAdmin}">Listar
+                                            Libros</a></li>
                                     <li><a class="dropdown-item" th:href="@{/add/libro}">Crear Libro</a></li>
 
                                 </ul>
@@ -72,7 +74,8 @@ https://templatemo.com/tm-558-klassy-cafe
                             <li class="submenu">
                                 <a href="javascript:;">Autores</a>
                                 <ul>
-                                    <li><a class="dropdown-item" th:href="@{/listar/autorAdmin}">Listar Autores</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/listar/autorAdmin}">Listar
+                                            Autores</a></li>
                                     <li><a class="dropdown-item" th:href="@{/add/autor}">Crear Autor</a></li>
                                 </ul>
                             </li>
@@ -81,7 +84,8 @@ https://templatemo.com/tm-558-klassy-cafe
                                 <ul>
                                     <li><a class="dropdown-item" th:href="@{/listar/editorialAdmin}">Listar
                                             Editoriales</a></li>
-                                    <li><a class="dropdown-item" th:href="@{/add/editorial}">Crear Editorial</a></li>
+                                    <li><a class="dropdown-item" th:href="@{/add/editorial}">Crear
+                                            Editorial</a></li>
                                 </ul>
                             </li>
                             <li class="submenu">
@@ -112,6 +116,45 @@ https://templatemo.com/tm-558-klassy-cafe
 
 
 
+
+    <!-- ***** Menu Area Starts ***** -->
+    <section class="section" id="offers">
+        <div th:if="${mensaje}" class="error-message">
+            <p th:text="${mensaje}"></p>
+        </div>
+        <div class="container">
+            <div class="col-lg-6">
+
+                <section class='tabs-content'>
+                    <article id='tabs-1'>
+                        <div class="row">
+                            <div class="row">
+                                <div class="right-list">
+                                    <div class="col-lg-12">
+                                        <div class="tab-item" th:each="usuario:${usuarios}">
+                                            <a th:href="@{/editar/usuario?usuarioId={id} (id=${usuario.id})}">
+                                                <img th:src="@{/imagen/perfil/{idUser} (idUser=${usuario.id})}" alt="">
+                                                <h4 th:text="${usuario.nombre}"></h4>
+                                                <p th:text="'id: '+ ${usuario.id}"></p>
+                                                <p th:text="'email: '+ ${usuario.email}"></p>
+                                                <p th:text="'rol: '+ ${usuario.rol}"></p>
+                                            </a>
+                                            <div class="price">
+                                                <a th:href="@{/eliminar/usuario?usuarioId={id} (id=${usuario.id})}">
+                                                    <h6>DROP</h6>
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </article>
+                </section>
+            </div>
+        </div>
+    </section>
+    <!-- ***** Chefs Area Ends ***** -->
 
     <!-- jQuery -->
     <script src="/assets/js/jquery-2.1.0.min.js"></script>

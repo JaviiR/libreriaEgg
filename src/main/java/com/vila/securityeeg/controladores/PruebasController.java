@@ -12,7 +12,6 @@ import com.vila.securityeeg.entitys.Autor;
 import com.vila.securityeeg.entitys.Editorial;
 import com.vila.securityeeg.servicios.AutorServicio;
 import com.vila.securityeeg.servicios.EditorialServicio;
-import com.vila.securityeeg.servicios.LibroServicio;
 
 
 @Controller

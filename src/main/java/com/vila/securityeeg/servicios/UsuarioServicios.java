@@ -98,4 +98,9 @@ public class UsuarioServicios implements UserDetailsService{
         Usuario usuario=usuarioRepositorio.findById(id).get();
         return usuario;
     }
+
+
+    public List<Usuario> findAllUsers(){
+        return usuarioRepositorio.findAll();
+    }
 }

@@ -59,39 +59,10 @@ https://templatemo.com/tm-558-klassy-cafe
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <img th:src="@{/imagen/perfil/{img} (img=${idUsuario})}" alt="" style="width: 60px;">
-                            <li class="scroll-to-section"><a class="active" th:text="${nombreUsuario}"></a></li>
-                            <li class="submenu">
-                                <a href="javascript:;">Libros</a>
-                                <ul>
-                                    <li><a class="dropdown-item" th:href="@{/listar/libro}">Listar Libros</a>
-                                    </li>
-
-                                </ul>
-                            </li>
-                            <li class="submenu">
-                                <a href="javascript:;">Autores</a>
-                                <ul>
-                                    <li><a class="dropdown-item" th:href="@{/listar/autor}">Listar Autores</a>
-                                    </li>
-                                </ul>
-                            </li>
-                            <li class="submenu">
-                                <a href="javascript:;">Editoriales</a>
-                                <ul>
-                                    <li><a class="dropdown-item" th:href="@{/listar/editorial}">Listar
-                                            Editoriales</a></li>
-                                </ul>
-                            </li>
-                            <!-- <li class=""><a rel="sponsored" href="https://templatemo.com" target="_blank">External URL</a></li> -->
-                            <li class="scroll-to-section"><a href="#" id="postLink">Logout</a></li>
-                            <form id="postForm" th:action="@{/logout}" method="post" style="display: none;">
-                                <input type="button" value="asdasd">
-                            </form>
+                            <li class="scroll-to-section"><a class="active" href="/principal">VOLVER</a></li>
+                            
                         </ul>
-                        <a class='menu-trigger'>
-                            <span>Menu</span>
-                        </a>
+                        
                         <!-- ***** Menu End ***** -->
                     </nav>
                 </div>
@@ -102,21 +73,13 @@ https://templatemo.com/tm-558-klassy-cafe
 
     <!-- ***** Menu Area Starts ***** -->
     <section class="section" id="offers">
-        <div class="container">
-            <div class="col-lg-6">
-                <section class='tabs-content'>
-                    <article id='tabs-1'>
-                        <div class="row">
-                            <div class="tab-item" >
-                                <!--<img th:src="@{/imagenes/error/error-critico-web.jpg" alt="">-->
-                                <h4 th:text="${errorCode}"></h4>
-                                <p th:text="${errorText}">
+        <div class="container" style="margin-left: 40%;">
+
+                                <img src="/imagenes/error/error-critico-web.jpg" alt="" style="width: 800px;">
+                                <h4 th:text="${errorCode}" style="font-size:110px; margin-left: 35%;"></h4>
+                                <p th:text="${errorText}" style="font-size:40px;">
                                 </p>
-                            </div>
-                        </div>
-                    </article>
-                </section>
-            </div>
+
         </div>
     </section>
 

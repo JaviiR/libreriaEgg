@@ -11,7 +11,7 @@
           rel="stylesheet">
      <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400;500;600;700&display=swap"
           rel="stylesheet">
-          <link rel="stylesheet" href="/assets/css/style.css">
+     <link rel="stylesheet" href="/assets/css/style.css">
      <title>Klassy Cafe - Restaurant HTML Template</title>
      <!--
     
@@ -60,7 +60,7 @@ https://templatemo.com/tm-558-klassy-cafe
                               <!-- ***** Menu Start ***** -->
                               <ul class="nav">
                                    <img th:src="@{/imagen/perfil/{img} (img=${idUsuario})}" alt="" style="width: 60px;">
-                                   <li class="scroll-to-section"><a  class="active" th:text="${nombreUsuario}"></a></li>
+                                   <li class="scroll-to-section"><a class="active" th:text="${nombreUsuario}"></a></li>
                                    <li class="submenu">
                                         <a href="javascript:;">Libros</a>
                                         <ul>
@@ -87,6 +87,15 @@ https://templatemo.com/tm-558-klassy-cafe
                                                        Editorial</a></li>
                                         </ul>
                                    </li>
+                                   <li class="submenu">
+                                        <a href="javascript:;">Usuarios</a>
+                                        <ul>
+                                             <li><a class="dropdown-item" th:href="@{/listar/usuario}">Listar
+                                                       Usuarios</a></li>
+                                             <li><a class="dropdown-item" th:href="@{/add/usuario}">Crear
+                                                       Usuario</a></li>
+                                        </ul>
+                                   </li>
                                    <!-- <li class=""><a rel="sponsored" href="https://templatemo.com" target="_blank">External URL</a></li> -->
                                    <li class="scroll-to-section"><a href="#" id="postLink">Logout</a></li>
                                    <form id="postForm" th:action="@{/logout}" method="post" style="display: none;">
@@ -111,7 +120,7 @@ https://templatemo.com/tm-558-klassy-cafe
      <section class="section" id="offers">
           <div th:if="${mensaje}" class="error-message">
                <p th:text="${mensaje}"></p>
-           </div>
+          </div>
           <div class="container">
                <div class="col-lg-6">
                     <section class='tabs-content'>

@@ -1,5 +1,7 @@
 package com.vila.securityeeg.controladores;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,7 +11,9 @@ import com.vila.securityeeg.entitys.Usuario;
 import com.vila.securityeeg.repositorios.AutorRepository;
 import com.vila.securityeeg.repositorios.EditorialRepository;
 import com.vila.securityeeg.repositorios.LibroRepository;
+import com.vila.securityeeg.servicios.UsuarioServicios;
 import jakarta.servlet.http.HttpSession;
+
 
 @Controller
 @RequestMapping("/listar")
@@ -21,6 +25,8 @@ public class ListEntityController {
     private EditorialRepository editorialRepo;
     @Autowired
     private LibroRepository libroRepo;
+    @Autowired
+    private UsuarioServicios usuarioServicio;
 
     @GetMapping("/autor")
     public String listAutor(Model modelo,HttpSession session) {
@@ -138,6 +144,12 @@ public class ListEntityController {
         }
     }
 
-
+    @GetMapping("/usuario")
+    public String listaUsuarios(Model modelo) {
+        List<Usuario> listaUsuarios=usuarioServicio.findAllUsers();
+        modelo.addAttribute("usuarios", listaUsuarios);
+        return "/listEntitys/listUser";
+    }
+    
     
 }
