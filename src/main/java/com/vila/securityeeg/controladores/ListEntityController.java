@@ -3,6 +3,7 @@ package com.vila.securityeeg.controladores;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -145,9 +146,12 @@ public class ListEntityController {
     }
 
     @GetMapping("/usuario")
-    public String listaUsuarios(Model modelo) {
+    public String listaUsuarios(Model modelo,HttpSession session) {
         List<Usuario> listaUsuarios=usuarioServicio.findAllUsers();
+        Usuario logueado=(Usuario)session.getAttribute("usuariosession");
         modelo.addAttribute("usuarios", listaUsuarios);
+        modelo.addAttribute("idUsuario", logueado.getId());
+        modelo.addAttribute("nombreUsuario", logueado.getNombre());
         return "/listEntitys/listUser";
     }
     

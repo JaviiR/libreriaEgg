@@ -14,21 +14,34 @@ import com.vila.securityeeg.entitys.Autor;
 import com.vila.securityeeg.entitys.Editorial;
 import com.vila.securityeeg.entitys.Libro;
 import com.vila.securityeeg.entitys.Usuario;
+import com.vila.securityeeg.enumeraciones.Rol;
 import com.vila.securityeeg.servicios.AutorServicio;
 import com.vila.securityeeg.servicios.EditorialServicio;
 import com.vila.securityeeg.servicios.LibroServicio;
+import com.vila.securityeeg.servicios.UsuarioServicios;
 import com.vila.securityeeg.utileria.Utileria;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
+
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
+import java.util.List;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
+import java.util.Map;
 import java.text.SimpleDateFormat;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 @Controller
 @RequestMapping("/editar")
 public class EditEntityController {
+    @Autowired
+    private UsuarioServicios usuarioServicio;
     @Autowired
     private LibroServicio libroServicio;
     @Autowired
@@ -107,7 +120,7 @@ public class EditEntityController {
                     modelo.addAttribute("img", editorial.getLogo());
 
                 } catch (Exception e) {
-                    System.out.println("Error: meotod editarEditorialGet");
+                    System.out.println("Error: metodo editarEditorialGet");
                 }
 
             }
@@ -224,5 +237,35 @@ public class EditEntityController {
         }
 
     }
+
+
+    @GetMapping("/usuario")
+    public String editarUsuario(@RequestParam(required = false) String usuarioId,Model modelo) {
+        Usuario usuario=usuarioServicio.usuarioById(usuarioId);
+        Map<Rol,String> listaRoles=new LinkedHashMap<>();
+        listaRoles.put(Rol.ADMIN, "ADMIN");
+        listaRoles.put(Rol.USER,"USER");
+        modelo.addAttribute("usuario", usuario);
+        modelo.addAttribute("roles", listaRoles);
+        return "editEntitys/editUser";
+    }
+
+    @PostMapping("/usuario")
+    public String editarUsuario(@RequestParam MultipartFile archivo,@RequestParam String usuarioId,@RequestParam String nombre, @RequestParam String email,@RequestParam Rol rol, @RequestParam String password,
+    @RequestParam String password2, RedirectAttributes redirect) {
+        try {
+            usuarioServicio.actualizar(archivo, usuarioId, nombre, email, rol, password, password2);
+            redirect.addFlashAttribute("mensaje","Usuario actulizado correctamente.");
+            return "redirect:/listar/usuario";
+        } catch (Exception e) {
+            redirect.addFlashAttribute("mensaje",e.getMessage());
+            
+            return "redirect:/listar/usuario";
+        }
+        
+        
+    }
+    
+    
 
 }
