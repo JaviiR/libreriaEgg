@@ -18,6 +18,8 @@ import java.util.ArrayList;
 import com.vila.securityeeg.entitys.Usuario;
 import com.vila.securityeeg.enumeraciones.Rol;
 import com.vila.securityeeg.repositorios.UsuarioRepositorio;
+
+import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpSession;
 import jakarta.transaction.Transactional;
 
@@ -30,20 +32,20 @@ public class UsuarioServicios implements UserDetailsService{
     private ImagenServicio imagenServicio;
 
     @Transactional
-    public void registrar(MultipartFile archivo,String nombre,String email,String password,String password2) throws Exception{
+    public void registrar(String nombreImg,String nombre,String email,String password,String password2) throws Exception{
         validar(nombre,email,password,password2);
         Usuario usuario=new Usuario();
         usuario.setNombre(nombre);
         usuario.setEmail(email);
         usuario.setPassword(new BCryptPasswordEncoder().encode(password));
         usuario.setRol(Rol.USER);
-        usuario.setImagen(imagenServicio.guardarImagen(archivo));
+        usuario.setImagen(nombreImg);
         usuarioRepositorio.save(usuario);
     }
 
 
     @Transactional
-    public void actualizar(MultipartFile archivo,String idUsuario,String nombre,String email,Rol rol,String password,String password2) throws Exception{
+    public void actualizar(String nombreImg,String idUsuario,String nombre,String email,Rol rol,String password,String password2) throws Exception{
         validar(nombre,email,password,password2);
         Optional<Usuario> respuesta=usuarioRepositorio.findById(idUsuario);
         if(respuesta.isPresent()){
@@ -52,11 +54,7 @@ public class UsuarioServicios implements UserDetailsService{
             usuario.setEmail(email);
             usuario.setRol(rol);
             usuario.setPassword(new BCryptPasswordEncoder().encode(password));
-            String IdImagen=null;
-            if(usuario.getImagen()!=null){
-                IdImagen=usuario.getImagen().getId();
-            }
-            usuario.setImagen(imagenServicio.actualizar(archivo,IdImagen));
+            usuario.setImagen(nombreImg);
             usuarioRepositorio.save(usuario);
         }else{
             System.out.println("repsuesta esta vacia");

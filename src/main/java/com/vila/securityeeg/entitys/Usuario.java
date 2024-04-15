@@ -23,8 +23,7 @@ public class Usuario {
     private String password;
     @Enumerated(EnumType.STRING)
     private Rol rol;
-    @OneToOne
-    private Imagen imagen;
+    private String imagen;
 
     public Usuario() {
     }
@@ -69,13 +68,15 @@ public class Usuario {
         this.rol = rol;
     }
 
-    public Imagen getImagen() {
+    public String getImagen() {
         return imagen;
     }
 
-    public void setImagen(Imagen imagen) {
+    public void setImagen(String imagen) {
         this.imagen = imagen;
     }
+
+    
     
 
 }

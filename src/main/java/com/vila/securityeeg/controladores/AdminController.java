@@ -20,13 +20,13 @@ public class AdminController {
             return "redirect:/login";
         }
         else if (!logueado.getRol().toString().equals("ADMIN")) {
+            modelo.addAttribute("nombreImg", logueado.getImagen());
             modelo.addAttribute("nombreUsuario", logueado.getNombre());
-            modelo.addAttribute("idUsuario", logueado.getId());
             return "redirect:/principal";
 
         }else{
+            modelo.addAttribute("nombreImg", logueado.getImagen());
             modelo.addAttribute("nombreUsuario", logueado.getNombre());
-            modelo.addAttribute("idUsuario", logueado.getId());
             return "/paneles/panelAdmin";
         }
         

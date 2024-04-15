@@ -60,7 +60,7 @@ https://templatemo.com/tm-558-klassy-cafe
                         <!-- ***** Logo End ***** -->
                         <!-- ***** Menu Start ***** -->
                         <ul class="nav">
-                            <img th:src="@{/imagen/perfil/{img} (img=${idUsuario})}" alt="" style="width: 60px;">
+                            <img th:src="@{/imagenes/usuario/{imagen} (imagen=${nombreImg})}" alt="" style="width: 60px;">
                             <li class="scroll-to-section"><a class="active" th:text="${nombreUsuario}"></a></li>
                             <li class="submenu">
                                 <a href="javascript:;">Libros</a>
@@ -120,7 +120,7 @@ https://templatemo.com/tm-558-klassy-cafe
     <!-- ***** Menu Area Starts ***** -->
     <section class="section" id="offers">
         <div th:if="${mensaje}" class="error-message">
-            <p th:text="${mensaje}"></p>
+            <p th:text="${mensaje}" ></p>
         </div>
         <div class="container">
             <div class="col-lg-6">
@@ -132,7 +132,7 @@ https://templatemo.com/tm-558-klassy-cafe
                                     <div class="col-lg-12">
                                         <div class="tab-item" th:each="usuario:${usuarios}">
                                             <a th:href="@{/editar/usuario?usuarioId={id} (id=${usuario.id})}">
-                                                <img th:src="@{/imagen/perfil/{idUser} (idUser=${usuario.id})}" alt="">
+                                                <img th:src="@{/imagenes/usuario/{imagen} (imagen=${usuario.imagen})}" alt="">
                                                 <h4 th:text="${usuario.nombre}"></h4>
                                                 <p th:text="'id: '+ ${usuario.id}"></p>
                                                 <p th:text="'email: '+ ${usuario.email}"></p>

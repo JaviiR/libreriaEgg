@@ -39,7 +39,7 @@ public class ImagenServicio {
                     }
                 }
                 imagen.setMime(archivo.getContentType());
-                imagen.setNombre(archivo.getName());
+                imagen.setNombre(archivo.getOriginalFilename());
                 imagen.setContenido(archivo.getBytes());
                 return imagenRepo.save(imagen);
             } catch (Exception e) {

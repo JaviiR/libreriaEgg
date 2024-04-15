@@ -25,13 +25,13 @@ public class HomeControler {
         if (logueado == null) {
             return "redirect:/login";
         } else if (logueado.getRol().toString().equals("ADMIN")) {
+            modelo.addAttribute("nombreImg", logueado.getImagen());
             modelo.addAttribute("nombreUsuario", logueado.getNombre());
-            modelo.addAttribute("idUsuario", logueado.getId());
             return "redirect:/admin/dashboard";
 
         } else {
+            modelo.addAttribute("nombreImg", logueado.getImagen());
             modelo.addAttribute("nombreUsuario", logueado.getNombre());
-            modelo.addAttribute("idUsuario", logueado.getId());
             return "/paneles/principal";
         }
 
@@ -39,15 +39,12 @@ public class HomeControler {
 
     @GetMapping("/login")
     public String login(@RequestParam(required = false) String error, ModelMap modelo, HttpSession session) {
-        Usuario logueado = (Usuario) session.getAttribute("usuariosession");
-        if (logueado == null) {
-            if (error != null) {
-                modelo.put("error", "Usuario o Contraseña invalidos");
-            }
-            return "/registersAndLogins/login";
+        
+        if (error != null) {
+            modelo.put("error", "Usuario o Contraseña invalidos");
         }
-        modelo.addAttribute("nombreUsuario", logueado.getNombre());
-        return "redirect:/principal";
+            return "/registersAndLogins/login";
+
     }
 
 }

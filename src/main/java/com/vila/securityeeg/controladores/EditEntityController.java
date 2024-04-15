@@ -20,22 +20,17 @@ import com.vila.securityeeg.servicios.EditorialServicio;
 import com.vila.securityeeg.servicios.LibroServicio;
 import com.vila.securityeeg.servicios.UsuarioServicios;
 import com.vila.securityeeg.utileria.Utileria;
+
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PostMapping;
-
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.Iterator;
 import java.util.LinkedHashMap;
-import java.util.LinkedList;
-import java.util.List;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
 import java.util.Map;
 import java.text.SimpleDateFormat;
-import org.springframework.web.bind.annotation.RequestBody;
-
 
 @Controller
 @RequestMapping("/editar")
@@ -54,6 +49,8 @@ public class EditEntityController {
     private String rutaEditorialImgs;
     @Value("${libreria.libro.imagenes}")
     private String rutaLibroImgs;
+    @Value("${libreria.usuario.imagenes}")
+    private String rutaUsuarioImgs;
 
     @GetMapping("/libro")
     public String editarLibro(Model modelo, @RequestParam(required = false) Long libroId, HttpSession session) {
@@ -118,7 +115,7 @@ public class EditEntityController {
                     modelo.addAttribute("editorialId", editorial.getId());
                     modelo.addAttribute("nombre", editorial.getNombre());
                     modelo.addAttribute("img", editorial.getLogo());
-
+                    modelo.addAttribute("nombreImg", editorial.getLogo());
                 } catch (Exception e) {
                     System.out.println("Error: metodo editarEditorialGet");
                 }
@@ -132,7 +129,7 @@ public class EditEntityController {
     }
 
     @PostMapping("/libro")
-    public String editLibro(RedirectAttributes redirect, @RequestParam Long isbn, @RequestParam String titulo,
+    public String editLibro(RedirectAttributes redirect, @RequestParam Long isbn, @RequestParam String titulo,@RequestParam String nombreImgActual,
             @RequestParam Integer ejemplar, @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") Date alta,
             @RequestParam String autorId, @RequestParam String editorialId,
             @RequestParam("archivoImagen") MultipartFile multipart, HttpSession session, Model modelo)
@@ -141,7 +138,7 @@ public class EditEntityController {
         if (logueado == null) {
             return "redirect:/login";
         } else if (logueado.getRol().toString().equals("ADMIN")) {
-            String nombre_img = "default.jpg";
+            String nombre_img = nombreImgActual;
             try {
                 if (!multipart.isEmpty()) {
                     String nombreImg = Utileria.guardarArchivo(multipart, rutaLibroImgs);
@@ -185,13 +182,14 @@ public class EditEntityController {
     }
 
     @PostMapping("/autor")
-    public String editarAutor(RedirectAttributes redirect, @RequestParam String autorId, @RequestParam String nombre,
-            @RequestParam("archivoImagen") MultipartFile multipart, HttpSession session, Model modelo) {
+    public String editarAutor(RedirectAttributes redirect, @RequestParam String autorId, @RequestParam String nombre,@RequestParam String nombreImgActual,
+            @RequestParam("archivoImagen") MultipartFile multipart, HttpSession session, Model modelo,HttpServletRequest request) {
+
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
         if (logueado == null) {
             return "redirect:/login";
         } else if (logueado.getRol().toString().equals("ADMIN")) {
-            String nombre_img = "default.jpg";
+            String nombre_img = nombreImgActual;
             try {
                 if (!multipart.isEmpty()) {
                     String nombreImg = Utileria.guardarArchivo(multipart, rutaAutorImgs);
@@ -208,21 +206,22 @@ public class EditEntityController {
             modelo.addAttribute("nombreUsuario", logueado.getNombre());
             return "redirect:/listar/autor";
         }
+        
     }
 
     @PostMapping("/editorial")
-    public String editarEditorial(RedirectAttributes redirect, @RequestParam String nombre,
+    public String editarEditorial(RedirectAttributes redirect, @RequestParam String nombre,@RequestParam String nombreImgActual,
             @RequestParam("archivoImagen") MultipartFile multipart, @RequestParam String editorialId, Model modelo,
             HttpSession session) {
         Usuario logueado = (Usuario) session.getAttribute("usuariosession");
         if (logueado == null) {
             return "redirect:/login";
         } else if (logueado.getRol().toString().equals("ADMIN")) {
-            String nombre_img = "default.jpg";
+            String nombre_img = nombreImgActual;
             try {
                 if (!multipart.isEmpty()) {
                     String nombreImg = Utileria.guardarArchivo(multipart, rutaEditorialImgs);
-                    if (nombreImg != null) {
+                    if (nombreImg != null) { 
                         nombre_img = nombreImg;
                     }
                 }
@@ -238,34 +237,56 @@ public class EditEntityController {
 
     }
 
-
     @GetMapping("/usuario")
-    public String editarUsuario(@RequestParam(required = false) String usuarioId,Model modelo) {
-        Usuario usuario=usuarioServicio.usuarioById(usuarioId);
-        Map<Rol,String> listaRoles=new LinkedHashMap<>();
+    public String editarUsuario(@RequestParam(required = false) String usuarioId, Model modelo,HttpSession session) {
+        Usuario logueado=(Usuario)session.getAttribute("usuariosession");
+        Usuario usuario = usuarioServicio.usuarioById(usuarioId);
+        if (logueado == null) {
+            return "redirect:/login";
+        } else if (logueado.getRol().toString().equals("ADMIN")) {
+        Map<Rol, String> listaRoles = new LinkedHashMap<>();
         listaRoles.put(Rol.ADMIN, "ADMIN");
-        listaRoles.put(Rol.USER,"USER");
+        listaRoles.put(Rol.USER, "USER");
         modelo.addAttribute("usuario", usuario);
         modelo.addAttribute("roles", listaRoles);
         return "editEntitys/editUser";
+        }else{
+            modelo.addAttribute("nombreUsuario", logueado.getNombre());
+            return "redirect:/principal";
+        }
     }
 
     @PostMapping("/usuario")
-    public String editarUsuario(@RequestParam MultipartFile archivo,@RequestParam String usuarioId,@RequestParam String nombre, @RequestParam String email,@RequestParam Rol rol, @RequestParam String password,
-    @RequestParam String password2, RedirectAttributes redirect) {
+    public String editarUsuario(@RequestParam MultipartFile archivo, @RequestParam String usuarioId,@RequestParam String nombreImgActual,
+            @RequestParam String nombre, @RequestParam String email, @RequestParam Rol rol,
+            @RequestParam String password,
+            @RequestParam String password2, RedirectAttributes redirect,HttpSession session,HttpServletRequest request) {
+                Usuario usuario=(Usuario)session.getAttribute("usuariosession");
         try {
-            usuarioServicio.actualizar(archivo, usuarioId, nombre, email, rol, password, password2);
-            redirect.addFlashAttribute("mensaje","Usuario actulizado correctamente.");
+            String nombreImg=nombreImgActual;
+            if(!archivo.isEmpty()){
+                String nombre_imagenes=Utileria.guardarArchivo(archivo, rutaUsuarioImgs);
+                if(nombre_imagenes!=null){
+                    nombreImg=nombre_imagenes;
+                }
+            }
+            usuarioServicio.actualizar(nombreImg, usuarioId, nombre, email, rol, password, password2);
+            redirect.addFlashAttribute("mensaje", "Usuario actualizado correctamente.");
+            if (usuario.getId().equals(usuarioId)) {
+                System.out.println("entró");
+                usuario=usuarioServicio.usuarioById(usuarioId);
+                session=request.getSession(true);
+                session.setAttribute("usuariosession", usuario);
+                System.out.println("salio");
+
+            }
             return "redirect:/listar/usuario";
         } catch (Exception e) {
-            redirect.addFlashAttribute("mensaje",e.getMessage());
-            
+            redirect.addFlashAttribute("mensaje", e.getMessage());
+
             return "redirect:/listar/usuario";
         }
-        
-        
+
     }
-    
-    
 
 }

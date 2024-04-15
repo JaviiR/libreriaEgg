@@ -29,6 +29,7 @@
             </div>
                 <input type="password" name="password" placeholder="NUEVA CONTRASEÑA" th:value="${password}">
                 <input type="password" name="password2" placeholder="REPETIR CONTRASEÑA" th:value="${password2}">
+                <input type="text" name="nombreImgActual" th:value="${usuario.imagen}" hidden>
                 <div class="form-group">
                     <label for="archivo" style="text-decoration: underline; font-size:20px">Imagen usuario</label>
                     <input type="file" class="form-control-file" name="archivo">

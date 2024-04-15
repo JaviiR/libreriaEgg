@@ -33,6 +33,7 @@ public class AddEntityController {
     private String rutaEditorialImgs;
     @Value("${libreria.libro.imagenes}")
     private String rutaLibroImgs;
+    
 
     @Autowired
     private AutorServicio autorService;

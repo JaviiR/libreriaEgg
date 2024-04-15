@@ -25,9 +25,10 @@
             <h2 id="tittle-new-autor">ACTUALIZAR EDITORIAL</h2>
             <input type="text" name="editorialId" th:value="${editorialId}" hidden="true">
             <input type="text" name="nombre" placeholder="NOMBRE" th:value="${nombre}">
+            <input type="text" th:value="${nombreImg}" name="nombreImgActual" hidden>
             <div class="form-group">
               <label for="archivoImagen" style="text-decoration: underline; font-size:20px">Logo Editorial</label>
-              <input type="file" class="form-control-file" name="archivoImagen">
+              <input type="file" class="form-control-file" name="archivoImagen" >
             </div>
             <button type="submit" >ACTUALIZAR</button>
           </form>
